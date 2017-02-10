@@ -1458,6 +1458,21 @@ function Janus(gatewayCallbacks) {
 								width  = 640;
 							}
 						}
+					} else if(media.video === 'fhdres' || media.video === 'fhdres-16:9' ) {
+						// High resolution is only 16:9
+						height = 1080;
+						maxHeight = 1080;
+						width = 1920;
+						if(navigator.mozGetUserMedia) {
+							var firefoxVer = parseInt(window.navigator.userAgent.match(/Firefox\/(.*)/)[1], 10);
+							if(firefoxVer < 38) {
+								// Unless this is and old Firefox, which doesn't support it
+								Janus.warn(media.video + " unsupported, falling back to stdres (old Firefox)");
+								height = 480;
+								maxHeight = 480;
+								width  = 640;
+							}
+						}
 					} else if(media.video === 'stdres') {
 						// Normal resolution, 4:3
 						height = 480;
